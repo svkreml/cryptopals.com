@@ -1,5 +1,7 @@
 package svkreml.challenge1;
 
+import org.bouncycastle.util.encoders.Hex;
+
 import java.util.Base64;
 
 public class HexBase64Converter {
@@ -15,6 +17,7 @@ public class HexBase64Converter {
     }
 
     public static byte[] hexToBytes(String hexInput) {
+        hexInput=hexInput.toLowerCase().replaceAll("[^0-9a-z]","");
         if (hexInput.length() % 2 != 0) throw new IllegalArgumentException("hex input should be even");
         byte[] inputBytes = new byte[hexInput.length() / 2];
         char[] charArray = hexInput.toCharArray();
@@ -25,13 +28,6 @@ public class HexBase64Converter {
     }
 
     public static String bytesToHex( byte[] bytesInput) {
-       StringBuilder output = new StringBuilder(bytesInput.length * 2);
-        for (int i = 0; i < bytesInput.length; i++) {
-            if(Integer.toString(bytesInput[i],16).length()==2)
-            output.append(Integer.toString(bytesInput[i],16));
-            else
-                output.append("0"+Integer.toString(bytesInput[i],16));
-        }
-        return output.toString();
+       return Hex.toHexString(bytesInput);
     }
 }

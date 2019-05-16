@@ -27,7 +27,7 @@ public class AESCrypto {
        // byte[] plainText  = "abcdefghijklmnopqrstuvwxyz".getBytes("UTF-8");
        // byte[] cipherText = cipher.doFinal(plainText);
         cipher.init(Cipher.DECRYPT_MODE, key);
-        byte[] bytes = FileManager.read(new File(" Set1\\src\\main\\resources\\svkreml\\challange7\\7.txt"));
+        byte[] bytes = FileManager.read(new File("Set1\\src\\main\\resources\\svkreml\\challange7\\7.txt"));
         byte[] cipherText = cipher.doFinal(Base64.getMimeDecoder().decode(bytes));
 
         System.out.println(new String(cipherText));

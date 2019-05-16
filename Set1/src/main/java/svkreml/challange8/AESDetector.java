@@ -1,6 +1,7 @@
 package svkreml.challange8;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.util.encoders.Hex;
 import svkreml.FileManager;
 import svkreml.challenge1.HexBase64Converter;
 
@@ -31,7 +32,8 @@ public class AESDetector {
         // byte[] plainText  = "abcdefghijklmnopqrstuvwxyz".getBytes("UTF-8");
         // byte[] cipherText = cipher.doFinal(plainText);
         cipher.init(Cipher.DECRYPT_MODE, key);
-        byte[] bytes = FileManager.read(new File(" Set1\\src\\main\\resources\\svkreml\\challange8\\8.txt"));
+        byte[] bytes = FileManager.read(new File("Set1\\src\\main\\resources\\" +
+                "svkreml\\challange8\\8.txt"));
         String[] lines = new String(bytes).split("\n");
         ArrayList<byte[]> byteLines = new ArrayList<>();
         for (String line : lines) {
@@ -41,19 +43,13 @@ public class AESDetector {
         for (int i = 0; i < byteLines.size(); i++) {
             System.out.println("----------------------");
             byte[] byteLine = byteLines.get(i);
-            Set<byte[]> blocks = new HashSet<>();
-            AtomicInteger uniq = new AtomicInteger(0);
-            for (int j = 0; j < byteLine.length / 16; j++) {
+            Set<SetBytes> blocks = new HashSet<>();
+            for (int j = 0; j < byteLine.length; j+=16) {
                 byte[] copyOfRange = Arrays.copyOfRange(byteLine, j, j + 16);
-
-                blocks.forEach((b) -> {
-                    boolean equals = Arrays.equals(b, copyOfRange);
-                    if (equals) uniq.getAndAdd(1);
-                });
-                blocks.add(copyOfRange);
-
+                blocks.add(new SetBytes(copyOfRange));
+                System.out.println(Hex.toHexString(copyOfRange));
             }
-            System.out.println(String.format("%6s, %4d", i, uniq.get()));
+            System.out.println(String.format("%6s, %4d", i, blocks.size()));
 /*            try {
                 System.out.println(i + "; " + byteLine.length);
                 byte[] cipherText = cipher.doFinal(byteLine);
@@ -62,5 +58,25 @@ public class AESDetector {
                 System.out.println(i + "; " + e.getMessage());
             }*/
         }
+    }
+}
+class SetBytes{
+    byte[] bytes;
+
+    public SetBytes(byte[] bytes) {
+        this.bytes = bytes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SetBytes setBytes = (SetBytes) o;
+        return Arrays.equals(bytes, setBytes.bytes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(bytes);
     }
 }
