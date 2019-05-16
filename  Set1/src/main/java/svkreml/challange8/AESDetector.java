@@ -37,7 +37,7 @@ public class AESDetector {
         for (String line : lines) {
             byteLines.add(HexBase64Converter.hexToBytes(line));
         }
-
+// todo https://thmsdnnr.com/tutorials/javascript/cryptopals/2017/09/22/cryptopals-set1-challenge-8-detecting-aes-in-ecb-mode.html
         for (int i = 0; i < byteLines.size(); i++) {
             System.out.println("----------------------");
             byte[] byteLine = byteLines.get(i);
