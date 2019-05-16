@@ -18,7 +18,7 @@ public class RepeatingXOR {
 
     public static void main(String[] args) {
         StringBuilder inputFile = new StringBuilder();
-        try (InputStream resourceAsStream = new FileInputStream("C:\\Users\\svkre\\IdeaProjects\\cryptopals\\ Set1\\src\\main\\resources\\svkreml\\challange6\\6.txt")) {
+        try (InputStream resourceAsStream = new FileInputStream(" Set1\\src\\main\\resources\\svkreml\\challange6\\6.txt")) {
             String line = null;
 
             try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(resourceAsStream, "UTF-8"))) {
